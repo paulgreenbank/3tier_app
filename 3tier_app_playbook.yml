@@ -1,0 +1,35 @@
+---
+# 3Tier Application main playbook
+
+- name: Add yum repo for 3Tier application
+  hosts: all
+  tasks:
+  - block:
+      - name: Including common role
+        include_role:
+          name: common
+
+- name: Install Postgres for 3Tier application
+  hosts: appdbs
+  tasks:
+  - block:
+      - name: Including postgres role
+        include_role:
+          name: postgres
+
+- name: Install Tomcat for 3Tier application
+  hosts: apps
+  tasks:
+  - block:
+      - name: Including tomcat role
+        include_role:
+          name: tomcat
+
+- name: Install HAProxy for 3Tier application
+  hosts: frontends
+  tasks:
+  - block:
+      - name: Including haproxy role
+        include_role:
+          name: haproxy
+
